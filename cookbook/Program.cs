@@ -13,16 +13,32 @@ namespace cookbook
         {
             int[] scores = { 17, 46, 39, 62, 81, 79, 52, 24 };
             Chapter1 ch1 = new Chapter1();
-            var (average, studentCount) = ch1.GetAverageAndCount(scores);
-            WriteLine($"Average was {average} across {studentCount} students");
+            int threshold = 40;
+            var (average, studentCount, belowAverage) = ch1.GetAverageAndCount(scores, threshold);
+            WriteLine($"Average was {average} across {studentCount} students. { (average < threshold ? " Class score below average." : " Class score above average.")}");
             ReadLine();
         }
 
-        public (int average, int studentCount) GetAverageAndCount(int[] scores)
+        public (int average, int studentCount, bool belowAverage) GetAverageAndCount(int[] scores, int threshold)
         {
-            var returnTuple = (ave:0, sCount:0);
-            returnTuple = (scores.Sum()/scores.Count(), scores.Count());
+            var returnTuple = (ave:0, sCount:0, subAve: true);
+            returnTuple = (scores.Sum() / scores.Count(), scores.Count(), 
+            returnTuple.ave.CheckIfBelowAverage(threshold));
             return returnTuple;
+        }
+    }
+
+    public static class ExtensionMethods
+    {
+        public static bool CheckIfBelowAverage(this int classAverage, int threshold)
+        {
+            if (classAverage < threshold)
+            {
+                // Notify head of department
+                return true;
+            }
+            else
+                return false;
         }
     }
 }
