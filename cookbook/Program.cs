@@ -30,14 +30,32 @@ namespace cookbook
             student.LastName = "Strauss";
             student.CourseCodes = new List<int> {  203, 202, 101 };
 
-            ch1.OutputInformation(student);
+            //ch1.OutputInformation(student);
 
             Professor prof = new Professor();
             prof.Name = "Reinhardt";
             prof.LastName = "Botha";
             prof.TeachesSubjects = new List<string> { "Mobile Development", "Cryptography" };
 
-            ch1.OutputInformation(prof);
+            //ch1.OutputInformation(prof);
+
+            
+            string sValue = "500";
+            /**
+            if (int.TryParse(sValue, out var intVal))
+            {
+                WriteLine($"{intVal} is a valid integer");
+                // Do something with intVal
+            }
+            */
+
+            var (original, intVal, isInteger) = sValue.ToInt();
+            if (isInteger)
+            {
+                WriteLine($"{original} is a valid integer");
+                // Do something with intVal
+            }
+
             ReadLine();
         }
 
@@ -116,6 +134,16 @@ namespace cookbook
             }
             else
                 return false;
+        }
+
+        public static (string originalValue, int integerValue, bool isInteger) ToInt (this string stringValue)
+        {
+            var t = (original: stringValue, toIntegerValue: 0, isInt: false);
+            if (int.TryParse(stringValue, out var iValue))
+            {
+                t.toIntegerValue = iValue; t.isInt = true;
+            }
+            return t;
         }
     }
 }
