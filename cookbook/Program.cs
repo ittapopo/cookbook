@@ -51,14 +51,42 @@ namespace cookbook
 
         public void OutputInformation(object person)
         {
+            /**
             if (person is Student student)
             {
-                WriteLine($"Student {student.Name} {student.LastName} is enrolled for courses {String.Join<int>(",", student.CourseCodes)}");
+                WriteLine($"Student {student.Name} {student.LastName} " +
+                    $"is enrolled for courses {String.Join<int>(", ", student.CourseCodes)}");
             }
-
             if (person is Professor prof)
             {
-                WriteLine($"Professor {prof.Name} {prof.LastName} teaches {String.Join<string>(",", prof.TeachesSubjects)}");
+                WriteLine($"Professor {prof.Name} {prof.LastName} " +
+                    $"teaches {String.Join<string>(",", prof.TeachesSubjects)}");
+            }
+            */
+            /**
+            if (person is null)
+            {
+                WriteLine($"Object {nameof(person)} is null");
+            }
+            */
+
+            switch (person)
+            {
+                case Student student when (student.CourseCodes.Contains(203)):
+                    WriteLine($"Student {student.Name} {student.LastName} is enrolled for course 203.");
+                    break;
+                case Student student:
+                    WriteLine($"Student {student.Name} {student.LastName} is enrolled for courses {String.Join<int>(", ", student.CourseCodes)}");
+                    break;
+                case Professor prof:
+                    WriteLine($"Professor {prof.Name} {prof.LastName} teaches {String.Join<string>(", ", prof.TeachesSubjects)}");
+                    break;
+                case null:
+                    WriteLine($"Object {nameof(person)} is null");
+                    break;
+                default:
+                    WriteLine("Unknown object detected");
+                    break;
             }
         }
 
