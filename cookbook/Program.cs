@@ -63,9 +63,19 @@ namespace cookbook
             */
 
             Building bldng = ch1.GetShopfloorSpace(200, 35, 100);
-            WriteLine($"The total space for shops is {bldng.TotalShopFloorSpace} square meters");
+            //WriteLine($"The total space for shops is {bldng.TotalShopFloorSpace} square meters");
+
+            var oldNum = 342057239127493;
+            var newNum = 342_057_239_127_493;
+            var binLit = 0b1010_1100_0011_0010_0001_0000;
+            //WriteLine($"oldNum = {oldNum} and newNum = {newNum} and binLit = {binLit}");
 
             ReadLine();
+        }
+
+        public int GetLargest(int valueA, int valueB)
+        {
+            if (valueA > valueB)
         }
 
         public Building GetShopfloorSpace(int floorCommonArea, int buildingWidth, int buildingLength)
@@ -78,6 +88,8 @@ namespace cookbook
             {
                 return (width * length) - common;
             }
+
+            building.TotalShopFloorSpace = CalculateShopFloorSpace(10, 9, 17);
 
             return building;
         }
