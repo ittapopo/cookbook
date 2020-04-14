@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using static System.Console;
 using static System.Math;
 using System.Collections.Generic;
+using static cookbook.Chapter1;
 
 namespace cookbook
 {
@@ -25,10 +26,13 @@ namespace cookbook
 
             Chapter1 ch1 = new Chapter1();
 
-            Student student = new Student();
+            Student student = new Student("S20323742");
             student.Name = "Dirk";
             student.LastName = "Strauss";
             student.CourseCodes = new List<int> {  203, 202, 101 };
+
+            var (FirstName, Surname) = student;
+            //WriteLine($"The student name is {FirstName} {Surname}");
 
             //ch1.OutputInformation(student);
 
@@ -49,14 +53,38 @@ namespace cookbook
             }
             */
 
+            /**
             var (original, intVal, isInteger) = sValue.ToInt();
             if (isInteger)
             {
                 WriteLine($"{original} is a valid integer");
                 // Do something with intVal
             }
+            */
+
+            Building bldng = ch1.GetShopfloorSpace(200, 35, 100);
+            WriteLine($"The total space for shops is {bldng.TotalShopFloorSpace} square meters");
 
             ReadLine();
+        }
+
+        public Building GetShopfloorSpace(int floorCommonArea, int buildingWidth, int buildingLength)
+        {
+            Building building = new Building();
+
+            building.TotalShopFloorSpace = CalculateShopFloorSpace(floorCommonArea, buildingWidth, buildingLength);
+
+            int CalculateShopFloorSpace(int common, int width, int length)
+            {
+                return (width * length) - common;
+            }
+
+            return building;
+        }
+
+        public class Building
+        {
+            public int TotalShopFloorSpace { get; set; }
         }
 
         public (double average, int studentCount, bool belowAverage) GetAverageAndCount(int[] scores, int threshold)
@@ -110,9 +138,26 @@ namespace cookbook
 
         public class Student
         {
+            public Student(string studentNumber)
+            {
+                (Name, LastName) = GetStudentDetails(studentNumber);
+            }
             public string Name { get; set; }
             public string LastName { get; set; }
             public List<int> CourseCodes { get; set; }
+
+            public void Deconstruct(out string name, out string lastName)
+            {
+                name = Name;
+                lastName = LastName;
+            }
+
+            private (string name, string surname) GetStudentDetails(string studentNumber)
+            {
+                var detail = (n: "Dirk", s: "Strauss");
+                // Do something with student number to return the student details
+                return detail;
+            }
         }
 
         public class Professor
@@ -145,5 +190,12 @@ namespace cookbook
             }
             return t;
         }
+
+        public static void Deconstruct(this Student student, out string firstItem, out string secondItem)
+        {
+            firstItem = student.Name;
+            secondItem = student.LastName;
+        }
+
     }
 }
