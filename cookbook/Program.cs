@@ -70,12 +70,66 @@ namespace cookbook
             var binLit = 0b1010_1100_0011_0010_0001_0000;
             //WriteLine($"oldNum = {oldNum} and newNum = {newNum} and binLit = {binLit}");
 
+            int a = 10;
+            int b = 20;
+            int val = ch1.GetLargest(a, b);
+            val += 25;
+            //WriteLine($"val = {val} a = {a} b = {b}");
+
+            ref int refVal = ref ch1.GetLargest(ref a, ref b);
+            refVal += 25;
+            //WriteLine($"refval = {refVal} a = {a} b = {b}");
+
+            /**
+            unsafe
+            {
+                IntPtr a_var_memoryAddress = (IntPtr)(&a);
+                IntPtr b_var_memoryAddress = (IntPtr)(&b);
+                IntPtr val_var_memoryAddress = (IntPtr)(&val);
+
+                fixed (int* refVal_var = &refVal)
+                {
+                    IntPtr refVal_var_memoryAddress = (IntPtr)(refVal_var);
+                    WriteLine($"The memory address of a is {a_var_memoryAddress}");
+                    WriteLine($"The memory address of b is {b_var_memoryAddress}");
+                    WriteLine($"The memory address of val is {val_var_memoryAddress}");
+                    WriteLine($"The memory address of refVal is {refVal_var_memoryAddress}");
+                }
+            } */
+
+            try
+            {
+                Chapter1 ch1_1 = new Chapter1();
+                int nameLength = ch1_1.GetNameLength("", "");
+            }
+            catch (Exception ex)
+            {
+                WriteLine(ex.Message);
+            }
+
             ReadLine();
+        }
+
+        public int GetNameLength(string firstName, string lastName)
+        {
+            return (firstName.Length + lastName.Length) > 0 ?
+                firstName.Length + lastName.Length : throw new Exception("First name and last name is empty");
         }
 
         public int GetLargest(int valueA, int valueB)
         {
             if (valueA > valueB)
+                return valueA;
+            else
+                return valueB;
+        }
+
+        public ref int GetLargest(ref int valueA, ref int valueB)
+        {
+            if (valueA > valueB)
+                return ref valueA;
+            else
+                return ref valueB;
         }
 
         public Building GetShopfloorSpace(int floorCommonArea, int buildingWidth, int buildingLength)
